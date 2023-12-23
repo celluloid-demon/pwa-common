@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  app:
+    image: gtg-gui
+    build: ./local/main
+    environment:
+      - DISPLAY=${DISPLAY}
+      - DBUS_SESSION_BUS_ADDRESS=unix:path=/var/run/dbus/session_bus_socket
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
+      - ./tmp/local/share/gtg:/root/.local/share/gtg
+      - ./tmp/config/gtg:/root/.config/gtg
+      - ./tmp/cache/gtg:/root/.cache/gtg
+    network_mode: host
+    cap_add:
+      - SYS_PTRACE
